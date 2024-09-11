@@ -7,8 +7,7 @@
   line-height: 1.5;
   color: #e2e2e2;
   background: rgb(1, 0, 11);
-  background: linear-gradient(
-    90deg,
+  background: linear-gradient(90deg,
     rgba(1, 0, 11, 1) 0%,
     rgba(108, 9, 121, 1) 35%,
     rgba(0, 255, 250, 0.8169468470982143) 100%
@@ -36,7 +35,7 @@
   align-items: flex-end;
   font-size: 2rem;
   font-family: 'Quantico', sans-serif;
-  color: #fff; /* Changed #ffffff to #fff */
+  color: #fff;
   word-wrap: break-word;
   word-break: break-all;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
@@ -57,7 +56,7 @@ button {
   font-size: 2.5rem;
   font-weight: 800;
   font-family: "Quantico", sans-serif;
-  color: #fff; /* Changed #ffffff to #fff */
+  color: #fff;
   transition: all 200ms ease-in-out;
   cursor: pointer;
 }
@@ -72,7 +71,50 @@ button:nth-child(17) {
 
 button:active {
   background: #03e8f4;
-  color: #fff; /* Changed #ffffff to #fff */
-  box-shadow: 0 0 5px #03e8f4, 0 0 25px #03e8f4, 0 0 50px #03e8f4,
-    0 0 200px #03e8f4;
+  color: #fff; 
+  box-shadow: 0 0 5px #03e8f4, 
+  0 0 25px #03e8f4, 
+  0 0 50px #03e8f4,
+  0 0 200px #03e8f4;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    min-height: auto;
+  }
+
+  .display {
+    font-size: 1.5rem;
+  }
+
+  .buttons {
+    grid-template: repeat(5, 80px) / repeat(4, 1fr);
+  }
+
+  button {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .display {
+    font-size: 1.2rem;
+    padding-inline: 5px;
+    padding-top: 3px;
+  }
+
+  .buttons {
+    grid-template: repeat(5, 70px) / repeat(4, 1fr);
+  }
+
+  button {
+    font-size: 1.8rem;
+  }
 }
