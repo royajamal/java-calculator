@@ -1,6 +1,6 @@
 import React from 'react';
-import Calculator from './Calculator';
-import './Calculator.css';
+import Calculator from './components/Calculator';
+import './components/Calculator.css';
 
 const App = () => (
   <div className="App">
