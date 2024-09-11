@@ -12,25 +12,29 @@ function calculatorReducer(state = initialState, action) {
       if (/^0$/.test(newFormula) && value !== '.') {
         newFormula = value;
       } else if (
-        (/^-/.test(newFormula) || /[/*+]-$/.test(newFormula)) &&
+        (/^-/.test(newFormula) ||
+          /[/*+]-$/.test(newFormula)) &&
         value === '-'
       ) {
-        return state; // No change in formula if consecutive "-" is entered
+        return state;
       } else if (/-$/.test(newFormula) && value === '-') {
-        newFormula = newFormula.slice(0, -1) + '+';
-      } else if (/[+/*]-$/.test(newFormula) && /[+*/]/.test(value)) {
-        newFormula = newFormula.slice(0, -2) + value;
+        newFormula = `${newFormula.slice(0, -1)}+`;
+      } else if (
+        /[+/*]-$/.test(newFormula) &&
+        /[+*/]/.test(value)
+      ) {
+        newFormula = `${newFormula.slice(0, -2)}${value}`;
       } else if (
         (/[0-9]+\.[0-9]+$/.test(newFormula) || /[0-9]+\.$/.test(newFormula)) &&
         value === '.'
       ) {
-        return state; // Ignore consecutive decimals
+        return state;
       } else if (state.isEval && /[-+/*]/.test(value)) {
         newFormula = state.formula + value;
       } else if (state.isEval && /[0-9]/.test(value)) {
         newFormula = value;
       } else if (/[+/*-]$/.test(newFormula) && /[+/*]/.test(value)) {
-        newFormula = newFormula.slice(0, -1) + value;
+        newFormula = `${newFormula.slice(0, -1)}${value}`;
       } else {
         newFormula += value;
       }
