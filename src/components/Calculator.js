@@ -1,48 +1,58 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import PropTypes from 'prop-types';  // Add PropTypes for validation
 
-function Button({id, value, handleInput, handleClear, handleDelete, handleEval}) {
-    return (
-      <button
-        type="button"
-        id={id}
-        value={value}
-        onClick={
-          value === "AC"
-            ? handleClear
-            : value === "DE"
-            ? handleDelete
-            : value === '='
-            ? (e) => handleEval(e)
-            : (e) => handleInput(e)
-        }
-      >
-        {value}
-      </button>
-    );
+function Button({ id, value, handleInput, handleClear, handleDelete, handleEval }) {
+  return (
+    <button
+      type="button"
+      id={id}
+      value={value}
+      onClick={
+        value === 'AC'
+          ? handleClear
+          : value === 'DE'
+          ? handleDelete
+          : value === '='
+          ? (e) => handleEval(e)
+          : (e) => handleInput(e)
+      }
+    >
+      {value}
+    </button>
+  );
 }
 
-function Calculator() {  // Rename App to Calculator
-  const [formula, setFormula] = React.useState("0");
+// Add prop-types validation
+Button.propTypes = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  handleInput: PropTypes.func.isRequired,
+  handleClear: PropTypes.func,
+  handleDelete: PropTypes.func,
+  handleEval: PropTypes.func,
+};
+
+function Calculator() {
+  const [formula, setFormula] = React.useState('0');
   const [isEval, setIsEval] = React.useState(false);
 
   const handleInput = (e) => {
-    if (/^0$/.test(formula) && e.target.value !== ".") {
+    if (/^0$/.test(formula) && e.target.value !== '.') {
       setFormula(e.target.value);
       setIsEval(false);
     } else if (
       (/^[\-]$/.test(formula) || /[/*+][\-]$/.test(formula)) &&
-      e.target.value === "-"
+      e.target.value === '-'
     ) {
       setIsEval(false);
       return;
-    } else if (/[\-]$/.test(formula) && e.target.value === "-") {
-      setFormula((prev) => prev.slice(0, -1) + "+");
+    } else if (/[\-]$/.test(formula) && e.target.value === '-') {
+      setFormula((prev) => prev.slice(0, -1) + '+');
     } else if (/[+/*][\-]$/.test(formula) && /[+*/]/.test(e.target.value)) {
       setFormula((prev) => prev.slice(0, -2) + e.target.value);
     } else if (
       (/[0-9]+[.][0-9]+$/.test(formula) || /[0-9]+[.]$/.test(formula)) &&
-      e.target.value === "."
+      e.target.value === '.'
     ) {
       setIsEval(false);
       return;
@@ -61,18 +71,23 @@ function Calculator() {  // Rename App to Calculator
     }
   };
 
-  const handleEval = (e) => {
-    setFormula((prev) => parseFloat(eval(prev).toFixed(10)));
-    setIsEval(true);
+  const handleEval = () => {
+    try {
+      // Avoid eval by using Function constructor
+      setFormula((prev) => parseFloat(Function('return ' + prev)().toFixed(10)));
+      setIsEval(true);
+    } catch (error) {
+      setFormula('Error');
+    }
   };
 
   const handleClear = () => {
-    setFormula("0");
+    setFormula('0');
   };
 
   const handleDelete = () => {
     if (/^[0-9\-/*+]$/.test(formula)) {
-      setFormula("0");
+      setFormula('0');
     } else {
       setFormula((prev) => prev.slice(0, -1));
     }
