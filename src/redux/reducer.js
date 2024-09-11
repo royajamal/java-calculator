@@ -33,7 +33,10 @@ function calculatorReducer(state = initialState, action) {
         newFormula = state.formula + value;
       } else if (state.isEval && /[0-9]/.test(value)) {
         newFormula = value;
-      } else if (/[+/*-]$/.test(newFormula) && /[+/*]/.test(value)) {
+      } else if (
+        /[+/*-]$/.test(newFormula) &&
+        /[+/*]/.test(value)
+      ) {
         newFormula = `${newFormula.slice(0, -1)}${value}`;
       } else {
         newFormula += value;
