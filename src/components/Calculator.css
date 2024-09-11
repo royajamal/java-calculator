@@ -36,10 +36,10 @@
   align-items: flex-end;
   font-size: 2rem;
   font-family: 'Quantico', sans-serif;
-  color: #ffffff;
+  color: #fff; /* Changed #ffffff to #fff */
   word-wrap: break-word;
   word-break: break-all;
-  border-bottom: 1px solid rgba( 255, 255, 255, 0.18 );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   overflow: hidden;  
 }
 
@@ -57,7 +57,7 @@ button {
   font-size: 2.5rem;
   font-weight: 800;
   font-family: "Quantico", sans-serif;
-  color: #ffffff;
+  color: #fff; /* Changed #ffffff to #fff */
   transition: all 200ms ease-in-out;
   cursor: pointer;
 }
@@ -65,13 +65,14 @@ button {
 button:nth-child(16) {
   grid-row: auto / span 2;
 }
+
 button:nth-child(17) {
   grid-column: auto / span 2;
 }
 
 button:active {
   background: #03e8f4;
-  color: #ffffff;
+  color: #fff; /* Changed #ffffff to #fff */
   box-shadow: 0 0 5px #03e8f4, 0 0 25px #03e8f4, 0 0 50px #03e8f4,
     0 0 200px #03e8f4;
 }
