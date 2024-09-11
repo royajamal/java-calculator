@@ -7,7 +7,8 @@
   line-height: 1.5;
   color: #e2e2e2;
   background: rgb(1, 0, 11);
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     rgba(1, 0, 11, 1) 0%,
     rgba(108, 9, 121, 1) 35%,
     rgba(0, 255, 250, 0.8169468470982143) 100%
@@ -39,7 +40,7 @@
   word-wrap: break-word;
   word-break: break-all;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  overflow: hidden;  
+  overflow: hidden;
 }
 
 .buttons {
@@ -71,11 +72,12 @@ button:nth-child(17) {
 
 button:active {
   background: #03e8f4;
-  color: #fff; 
-  box-shadow: 0 0 5px #03e8f4, 
-  0 0 25px #03e8f4, 
-  0 0 50px #03e8f4,
-  0 0 200px #03e8f4;
+  color: #fff;
+  box-shadow:
+    0 0 5px #03e8f4,
+    0 0 25px #03e8f4,
+    0 0 50px #03e8f4,
+    0 0 200px #03e8f4;
 }
 
 @media (max-width: 768px) {
