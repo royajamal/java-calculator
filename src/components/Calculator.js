@@ -1,21 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';  // Add PropTypes for validation
+import PropTypes from 'prop-types';
 
 function Button({ id, value, handleInput, handleClear, handleDelete, handleEval }) {
+  const handleClick = (e) => {
+    if (value === 'AC') handleClear();
+    else if (value === 'DE') handleDelete();
+    else if (value === '=') handleEval(e);
+    else handleInput(e);
+  };
+
   return (
     <button
       type="button"
       id={id}
       value={value}
-      onClick={
-        value === 'AC'
-          ? handleClear
-          : value === 'DE'
-          ? handleDelete
-          : value === '='
-          ? (e) => handleEval(e)
-          : (e) => handleInput(e)
-      }
+      onClick={handleClick}
     >
       {value}
     </button>
@@ -32,49 +31,43 @@ Button.propTypes = {
   handleEval: PropTypes.func,
 };
 
+Button.defaultProps = {
+  handleClear: () => {},
+  handleDelete: () => {},
+  handleEval: () => {},
+};
+
 function Calculator() {
   const [formula, setFormula] = React.useState('0');
   const [isEval, setIsEval] = React.useState(false);
 
   const handleInput = (e) => {
-    if (/^0$/.test(formula) && e.target.value !== '.') {
-      setFormula(e.target.value);
+    const val = e.target.value;
+
+    if (/^0$/.test(formula) && val !== '.') {
+      setFormula(val);
       setIsEval(false);
-    } else if (
-      (/^[\-]$/.test(formula) || /[/*+][\-]$/.test(formula)) &&
-      e.target.value === '-'
-    ) {
-      setIsEval(false);
+    } else if (/^[\-]$/.test(formula) || /[/*+][\-]$/.test(formula)) {
+      if (val === '-') return;
+      setFormula((prev) => prev.slice(0, -1) + val);
+    } else if ((/[0-9]+[.][0-9]+$/.test(formula) || /[0-9]+[.]$/.test(formula)) && val === '.') {
       return;
-    } else if (/[\-]$/.test(formula) && e.target.value === '-') {
-      setFormula((prev) => prev.slice(0, -1) + '+');
-    } else if (/[+/*][\-]$/.test(formula) && /[+*/]/.test(e.target.value)) {
-      setFormula((prev) => prev.slice(0, -2) + e.target.value);
-    } else if (
-      (/[0-9]+[.][0-9]+$/.test(formula) || /[0-9]+[.]$/.test(formula)) &&
-      e.target.value === '.'
-    ) {
+    } else if (isEval && /[-+/*]/.test(val)) {
+      setFormula((prev) => prev + val);
       setIsEval(false);
-      return;
-    } else if (isEval && /[-+/*]/.test(e.target.value)) {
-      setFormula((prev) => prev + e.target.value);
-      setIsEval(false);
-    } else if (isEval && /[0-9]/.test(e.target.value)) {
-      setFormula(e.target.value);
-      setIsEval(false);
-    } else if (/[+/*-]$/.test(formula) && /[+/*]/.test(e.target.value)) {
-      setFormula((prev) => prev.slice(0, -1) + e.target.value);
+    } else if (isEval && /[0-9]/.test(val)) {
+      setFormula(val);
       setIsEval(false);
     } else {
-      setFormula((prev) => prev + e.target.value);
+      setFormula((prev) => prev + val);
       setIsEval(false);
     }
   };
 
   const handleEval = () => {
     try {
-      // Avoid eval by using Function constructor
-      setFormula((prev) => parseFloat(Function('return ' + prev)().toFixed(10)));
+      const result = parseFloat((new Function(`return ${formula}`)()).toFixed(10));
+      setFormula(String(result));
       setIsEval(true);
     } catch (error) {
       setFormula('Error');
@@ -86,11 +79,7 @@ function Calculator() {
   };
 
   const handleDelete = () => {
-    if (/^[0-9\-/*+]$/.test(formula)) {
-      setFormula('0');
-    } else {
-      setFormula((prev) => prev.slice(0, -1));
-    }
+    setFormula((prev) => (prev.length > 1 ? prev.slice(0, -1) : '0'));
   };
 
   return (
