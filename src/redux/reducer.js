@@ -12,7 +12,8 @@ function calculatorReducer(state = initialState, action) {
       if (/^0$/.test(newFormula) && value !== '.') {
         newFormula = value;
       } else if (
-        (/^-/.test(newFormula) || /[/*+]-$/.test(newFormula)) &&
+        (/^-/.test(newFormula) ||
+        /[/*+]-$/.test(newFormula)) &&
         value === '-'
       ) {
         return state;
@@ -24,7 +25,7 @@ function calculatorReducer(state = initialState, action) {
       ) {
         newFormula = `${newFormula.slice(0, -2)}${value}`;
       } else if (
-        (/^[0-9]+\.[0-9]+$/.test(newFormula) || 
+        (/^[0-9]+\.[0-9]+$/.test(newFormula) ||
         /^[0-9]+\.$/.test(newFormula)) &&
         value === '.'
       ) {
@@ -53,7 +54,7 @@ function calculatorReducer(state = initialState, action) {
       let result;
       try {
         result = parseFloat(
-          Math.evaluate(state.formula).toFixed(10)
+          Math.evaluate(state.formula).toFixed(10) // Ensure 'Math.evaluate' is correctly used here; might need 'mathjs' library
         );
       } catch (error) {
         result = 'Error';
