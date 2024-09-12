@@ -62,9 +62,9 @@ function Calculator() {
     } else if (/^-$/.test(formula) || /[/*+]-$/.test(formula)) {
       setFormula((prev) => prev.slice(0, -1) + val);
     } else if (
-      (/[0-9]+\.[0-9]+$/.test(formula) ||
-      /[0-9]+\.$/.test(formula)) &&
-      val === '.'
+      /[0-9]+\.[0-9]+$/.test(formula)
+      || /[0-9]+\.$/.test(formula)
+      && val === '.'
     ) {
       // Prevent adding multiple decimals in a number
     } else if (isEval && /[-+/*]/.test(val)) {
