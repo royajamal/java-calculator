@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Button({ id, value, handleInput, handleClear, handleDelete, handleEval }) {
+function Button({
+  id,
+  value,
+  handleInput,
+  handleClear,
+  handleDelete,
+  handleEval,
+}) {
   const handleClick = (e) => {
     if (value === 'AC') handleClear();
     else if (value === 'DE') handleDelete();
@@ -47,7 +54,7 @@ function Calculator() {
     if (/^0$/.test(formula) && val !== '.') {
       setFormula(val);
       setIsEval(false);
-    } else if (/^[\-]$/.test(formula) || /[/*+][\-]$/.test(formula)) {
+    } else if (/^[\-]$/.test(formula) || /[/*+][-]$/.test(formula)) {
       if (val === '-') return;
       setFormula((prev) => prev.slice(0, -1) + val);
     } else if ((/[0-9]+[.][0-9]+$/.test(formula) || /[0-9]+[.]$/.test(formula)) && val === '.') {
@@ -66,7 +73,7 @@ function Calculator() {
 
   const handleEval = () => {
     try {
-      const result = parseFloat((new Function(`return ${formula}`)()).toFixed(10));
+      const result = parseFloat(Function(`"use strict"; return (${formula})`)().toFixed(10));
       setFormula(String(result));
       setIsEval(true);
     } catch (error) {
