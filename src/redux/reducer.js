@@ -13,31 +13,23 @@ function calculatorReducer(state = initialState, action) {
         newFormula = value;
       } else if (
         (/^-/.test(newFormula) ||
-        /[/*+]-$/.test(newFormula)) &&
-        value === '-'
-      ) {
+        /[/*+]-$/.test(newFormula)) && value === '-') {
         return state;
       } else if (/-$/.test(newFormula) && value === '-') {
         newFormula = `${newFormula.slice(0, -1)}+`;
       } else if (
-        /[+/*]-$/.test(newFormula) &&
-        /[+*/]/.test(value)
-      ) {
+        /[+/*]-$/.test(newFormula) && /[+*/]/.test(value)) {
         newFormula = `${newFormula.slice(0, -2)}${value}`;
       } else if (
         (/^[0-9]+\.[0-9]+$/.test(newFormula) ||
-        /^[0-9]+\.$/.test(newFormula)) &&
-        value === '.'
-      ) {
+        /^[0-9]+\.$/.test(newFormula)) && value === '.') {
         return state;
       } else if (state.isEval && /[-+/*]/.test(value)) {
         newFormula = state.formula + value;
       } else if (state.isEval && /[0-9]/.test(value)) {
         newFormula = value;
       } else if (
-        /[+/*-]$/.test(newFormula) &&
-        /[+/*]/.test(value)
-      ) {
+        /[+/*-]$/.test(newFormula) && /[+/*]/.test(value)) {
         newFormula = `${newFormula.slice(0, -1)}${value}`;
       } else {
         newFormula += value;
@@ -54,7 +46,7 @@ function calculatorReducer(state = initialState, action) {
       let result;
       try {
         result = parseFloat(
-          Math.evaluate(state.formula).toFixed(10) // Ensure 'Math.evaluate' is correctly used here; might need 'mathjs' library
+          Math.evaluate(state.formula).toFixed(10),
         );
       } catch (error) {
         result = 'Error';
