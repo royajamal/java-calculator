@@ -28,7 +28,6 @@ function Button({
   );
 }
 
-// Add prop-types validation
 Button.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
@@ -54,10 +53,9 @@ function Calculator() {
     if (/^0$/.test(formula) && val !== '.') {
       setFormula(val);
       setIsEval(false);
-    } else if (/^[\-]$/.test(formula) || /[/*+][-]$/.test(formula)) {
-      if (val === '-') return;
+    } else if (/^-$/.test(formula) || /[/*+]-$/.test(formula)) {
       setFormula((prev) => prev.slice(0, -1) + val);
-    } else if ((/[0-9]+[.][0-9]+$/.test(formula) || /[0-9]+[.]$/.test(formula)) && val === '.') {
+    } else if ((/[0-9]+\.[0-9]+$/.test(formula) || /[0-9]+\.$/.test(formula)) && val === '.') {
       return;
     } else if (isEval && /[-+/*]/.test(val)) {
       setFormula((prev) => prev + val);
@@ -73,7 +71,7 @@ function Calculator() {
 
   const handleEval = () => {
     try {
-      const result = parseFloat(Function(`"use strict"; return (${formula})`)().toFixed(10));
+      const result = parseFloat(eval(formula).toFixed(10));
       setFormula(String(result));
       setIsEval(true);
     } catch (error) {
