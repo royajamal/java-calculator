@@ -4,7 +4,7 @@
 A JavaScript Calculator is a simple web application that allows users to perform basic arithmetic operations such as addition, subtraction, multiplication, and division. This project demonstrates the use of JavaScript to handle logic and interactivity, HTML to create the structure of the calculator, and CSS to style the user interface.
 
 ## Live Demo 🎥
-
+(https://java-calculator-8gm5wnmlf-royajamals-projects.vercel.app/)
 
 ## Demo 📸
 ![screenshot](public/jave%201.png)
@@ -31,7 +31,9 @@ cd javascript-calculator
 3. Open the index.html File in a Browser: Simply double-click on the index.html file in the project folder or open it in a web browser to use the calculator.
 
 ## Author 👩‍💻
-
+- GitHub: (https://github.com/royajamal/)
+- LinkedIn: (https://www.linkedin.com/in/roya-jamal)
+- Email : (royajamal2003@gmail.com)
 
 ## License
 MIT License
