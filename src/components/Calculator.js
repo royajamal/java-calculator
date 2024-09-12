@@ -57,7 +57,6 @@ function Calculator() {
     } else if (/^-$/.test(formula) || /[/*+]-$/.test(formula)) {
       setFormula((prev) => prev.slice(0, -1) + val);
     } else if ((/[0-9]+\.[0-9]+$/.test(formula) || /[0-9]+\.$/.test(formula)) && val === '.') {
-      return; // Prevent entering multiple decimals in the same number
     } else if (isEval && /[-+/*]/.test(val)) {
       setFormula((prev) => prev + val);
       setIsEval(false);
