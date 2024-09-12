@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { evaluate } from 'mathjs';
 
 function Button({
   id,
@@ -56,7 +57,7 @@ function Calculator() {
     } else if (/^-$/.test(formula) || /[/*+]-$/.test(formula)) {
       setFormula((prev) => prev.slice(0, -1) + val);
     } else if ((/[0-9]+\.[0-9]+$/.test(formula) || /[0-9]+\.$/.test(formula)) && val === '.') {
-      return;
+      
     } else if (isEval && /[-+/*]/.test(val)) {
       setFormula((prev) => prev + val);
       setIsEval(false);
@@ -71,7 +72,7 @@ function Calculator() {
 
   const handleEval = () => {
     try {
-      const result = parseFloat(eval(formula).toFixed(10));
+      const result = parseFloat(evaluate(formula).toFixed(10));
       setFormula(String(result));
       setIsEval(true);
     } catch (error) {
